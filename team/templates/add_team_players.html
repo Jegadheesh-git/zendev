@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-8">
+    <h1 class="font-bold mb-4">Add Team</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Team: {{team.name}}</label><br>
+        
+        <div class="flex gap-4 mt-8 h-96">
+            <div class="w-1/4 rounded-lg">
+                <p class="my-2">Available players</p>
+                <div class="flex w-full rounded-t-lg ">
+                    <p class="w-1/4 px-4 bg-secondary800 py-1 rounded-tl-lg">Search</p>
+                    <div class="w-3/4">
+                        <input type="text" class="w-full py-1 px-2 text-white rounded-tr-lg bg-secondary700">
+                    </div>
+                </div>
+                <div id="available-players" class="flex flex-col gap-1 h-full bg-gray-600 overflow-auto">
+                    {% for player in players %}
+                    <div class="player bg-gray-500 flex flex-row gap-2 py-1 px-2" id="{{ player.id }}" >
+                        <button class="add-player" data-playerId="{{ player.id }}" data-playerName="{{ player.nickName }}">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="16" height="16" rx="8" fill="#BF8412"/>
+                                <path d="M11.5 7.5H8.5V4.5C8.5 4.224 8.276 4 8 4C7.724 4 7.5 4.224 7.5 4.5V7.5H4.5C4.224 7.5 4 7.724 4 8C4 8.276 4.224 8.5 4.5 8.5H7.5V11.5C7.5 11.776 7.724 12 8 12C8.276 12 8.5 11.776 8.5 11.5V8.5H11.5C11.776 8.5 12 8.276 12 8C12 7.724 11.776 7.5 11.5 7.5Z" fill="white"/>
+                            </svg>
+                        </button>
+                        <h4 class="px-2 py-1">{{ player.nickName }}</h4>    
+                    </div>
+                    {% endfor %}
+                </div>
+             </div>
+            
+            <div class="w-3/4">
+                <h2 class="bg-blue-800 py-1 px-4 rounded-t-lg">Selected Players:</h2>
+                <div id="selected-players" class="h-96 overflow-auto">
+                    {% for player in team.players.all %}
+                        <div class="player bg-gray-500 flex flex-row gap-2 py-1 px-2" id="{{ player.id }}" >
+                        <button class="add-player" data-playerId="{{ player.id }}" data-playerName="{{ player.nickName }}">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="16" height="16" rx="8" fill="#BF8412"/>
+                                <path d="M11.5 7.5H8.5V4.5C8.5 4.224 8.276 4 8 4C7.724 4 7.5 4.224 7.5 4.5V7.5H4.5C4.224 7.5 4 7.724 4 8C4 8.276 4.224 8.5 4.5 8.5H7.5V11.5C7.5 11.776 7.724 12 8 12C8.276 12 8.5 11.776 8.5 11.5V8.5H11.5C11.776 8.5 12 8.276 12 8C12 7.724 11.776 7.5 11.5 7.5Z" fill="white"/>
+                            </svg>
+                        </button>
+                        <h4 class="px-2 py-1">{{ player.nickName }}</h4>    
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="flex justify-end">
+            <input type="submit" value="Add Team" class="mt-8 bg-blue-700 rounded-lg px-2 py-1">
+        </div>
+    </form>
+</div>
+
+<script>
+    
+</script>
+
+{% endblock %}

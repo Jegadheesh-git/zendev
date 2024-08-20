@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="p-8">
+        <div class="flex justify-end">
+            <a href="{% url 'addUmpire' %}">
+                <div class="px-2 py-1 rounded-sm flex gap-2 bg-buttonPurple">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="mt-1">
+                    <g clip-path="url(#clip0_423_29)">
+                    <path d="M8 0C3.58175 0 0 3.58175 0 8C0 12.4185 3.58175 16 8 16C12.4185 16 16 12.4185 16 8C16 3.58175 12.4185 0 8 0ZM8 15.0157C4.14025 15.0157 1 11.8597 1 7.99997C1 4.14022 4.14025 0.999969 8 0.999969C11.8597 0.999969 15 4.14023 15 7.99997C15 11.8597 11.8597 15.0157 8 15.0157ZM11.5 7.5H8.5V4.5C8.5 4.224 8.276 4 8 4C7.724 4 7.5 4.224 7.5 4.5V7.5H4.5C4.224 7.5 4 7.724 4 8C4 8.276 4.224 8.5 4.5 8.5H7.5V11.5C7.5 11.776 7.724 12 8 12C8.276 12 8.5 11.776 8.5 11.5V8.5H11.5C11.776 8.5 12 8.276 12 8C12 7.724 11.776 7.5 11.5 7.5Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_423_29">
+                    <rect width="16" height="16" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+                <p>Add Umpire</p>
+            </div>
+        </a>
+        </div>
+        <table class="table-auto w-full text-left mt-2">
+            <thead class="bg-gray-500">
+                <tr>
+                    <th class="p-2">ID</th><th class="p-2">Umpire Name</th><th class="p-2">Nationality</th><th class="p-2 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for umpire in umpires %}
+                <tr>
+                    <td class="p-2">{{umpire.id}}</td>
+                    <td class="p-2">{{umpire.name}}</td>  
+                    <td class="p-2">{{umpire.nationality}} </td>
+                    <td class="p-2 flex justify-end"> <a href="{% url 'deleteUmpire' umpire.id %}">
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_429_9)">
+                            <path d="M2.8335 4.95834H14.1668" stroke="white" stroke-width="1.0625" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7.0835 7.79166V12.0417" stroke="white" stroke-width="1.0625" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.9165 7.79166V12.0417" stroke="white" stroke-width="1.0625" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.5415 4.95834L4.24984 13.4583C4.24984 13.8341 4.39909 14.1944 4.66477 14.4601C4.93045 14.7257 5.29078 14.875 5.6665 14.875H11.3332C11.7089 14.875 12.0692 14.7257 12.3349 14.4601C12.6006 14.1944 12.7498 13.8341 12.7498 13.4583L13.4582 4.95834" stroke="white" stroke-width="1.0625" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.375 4.95833V2.83333C6.375 2.64547 6.44963 2.4653 6.58247 2.33247C6.7153 2.19963 6.89547 2.125 7.08333 2.125H9.91667C10.1045 2.125 10.2847 2.19963 10.4175 2.33247C10.5504 2.4653 10.625 2.64547 10.625 2.83333V4.95833" stroke="white" stroke-width="1.0625" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_429_9">
+                            <rect width="17" height="17" fill="white"/>
+                            </clipPath>
+                            </defs>
+                            </svg>
+                    </a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </div>
+{% endblock %}

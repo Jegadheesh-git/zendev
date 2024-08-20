@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-12">
+    
+    <form method="post">
+        {% csrf_token %}
+        <div id="configuration-div" >
+        <div class="flex gap-6">
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Competition Name</p>
+                <input type="text" name="name" placeholder="name" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+            </div>
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Display Name</p>
+                <input type="text" name="displayName" placeholder="display name" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+            </div>
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Year</p>
+                <input type="number" name="year" placeholder="year" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+            </div>
+        </div>
+
+        <div class="flex gap-6 mt-8 ">
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Match Type</p>
+                <select name="matchType" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+                    <option value="">----</option>
+                    {% for match_type in match_types %}
+                        <option value="{{match_type.id}}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">{{match_type.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Tournament</p>
+                <select name="tournament" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+                    <option value="">----</option>
+                    {% for tournament in tournaments %}
+                        <option value="{{tournament.id}}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">{{tournament.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Start Date</p>
+                <input type="date" name="fromDate" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+            </div>
+        </div>
+
+        <div class="flex gap-6 mt-8">
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>End Date</p>
+                <input type="date" name="toDate" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+            </div>
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Match Count</p>
+                <input type="number" name="matchCount" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+            </div>
+            <div class="flex flex-col gap-2 w-1/4">
+                <p>Gender</p>
+                <select name="gender" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">
+                    <option value="Male" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">Male</option>
+                    <option value="Female" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">Female</option>
+                    <option value="Third gender" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400">Third gender</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="flex gap-4 mt-10">
+            <a href="{% url 'getAllCompetitions' %}"><p class="underline">Cancel</p></a>
+            <input type="submit" value="Proceed to Team Selection" class=" bg-primary700 py-1 px-4 text-center rounded-sm" id="proceed-btn">
+        </div>
+        </div>        
+    </form>
+</div>
+
+{% endblock %}
+
+

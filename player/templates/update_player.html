@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-6">
+    <form method="POST">
+        <div id="personal-info" >
+            <p class="mb-4 font-bold">Player's Info</p>
+        {% csrf_token %}
+        <!-- First Name, Middle Name, Last Name, Nick Name fields -->
+        <div class="flex gap-4">
+            <div  class="w-1/3">
+                <p class="mb-2">First Name</p>
+                <input type="text" name="firstName" placeholder="First Name" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.firstName}}">
+            </div>
+            <div class="w-1/3">
+                <p class="mb-2">Middle Name</p>
+                <input type="text" name="middleName" placeholder="Middle Name" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.middleName}}">
+            </div>
+            <div class="w-1/3">
+                <p class="mb-2">Last Name</p>
+                <input type="text" name="lastName" placeholder="Last Name" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.lastName}}">
+            </div>
+        </div>
+
+        <div class="flex gap-4 mt-4">
+            <div class="w-1/3">
+                <p class="mb-2">Nick Name</p>
+                <input type="text" name="nickName" placeholder="Nick Name" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.nickName}}">
+            </div>
+            <div class="w-1/3">
+                <p class="mb-2">CI Player ID</p>
+                <input type="text" name="ciPlayerId" placeholder="CI player Id" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.ciPlayerId}}">
+            </div>
+        </div>
+
+        <!-- Select fields for Foreign Key fields -->
+        <div class="flex gap-4 mt-4">
+            <div class="w-1/3">
+                <p class="mb-2">Nationality</p>
+                <select name="nationalityId" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                    {% for nationality in nationalities %}
+                        {% if player.nationalityId.id == nationality.id %}
+                            <option value="{{ nationality.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>{{ nationality.name }}</option>
+                        {% else %}
+                            <option value="{{ nationality.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">{{ nationality.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        <div class="w-1/3">
+            <p class="mb-2">Gender</p>
+            <select name="gender" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                {% if player.gender == 1 %}
+                    <option value="1" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Male</option>
+                {% else %}
+                    <option value="2" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Female</option>
+                {% endif %}
+            </select>
+        </div>
+        <div class="w-1/3">
+            <p class="mb-2">Date Of Birth</p>
+            <input type="date" name="dob" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.dob|date:'Y-m-d'}}">
+        </div>
+        </div>
+        <div class="flex gap-4 mt-4">
+            <div class="w-1/3">
+                <p class="mb-2">Height Type</p>
+                <select name="heightType" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                    {% for height_type in height_types %}
+                        {% if height_type.id == player.heightType.id %}
+                            <option value="{{ height_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>{{ height_type.name }}</option>
+                        {% else %}
+                            <option value="{{ height_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">{{ height_type.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="w-1/3">
+                <p class="mb-2">Height</p>
+                <input type="number" name="height" step="0.01" placeholder="Height" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.height}}">
+            </div>
+            <div class="w-1/3">
+                <p class="mb-2">Weight</p>
+                <input type="number" name="weight" step="0.01" placeholder="Weight" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" value="{{player.weight}}">
+            </div>
+        </div>
+        <div class="mt-8 flex justify-end">
+            <p class="bg-blue-600 px-2 py-1" id="proceed-btn">Proceed to Playing Details</p>
+        </div>
+        </div>
+
+        <div id="playing-info" hidden>
+        <div class="flex gap-4 mt-4">
+            <div class="w-1/3">
+                <p class="mb-2">Bowling Type</p>
+                <select name="bowlingTypeId" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                    <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Select Bowling Type</option>
+                    {% for bowling_type in bowling_types %}
+                        {% if player.bowlingTypeId.id == bowling_type.id %}
+                            <option value="{{ bowling_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>{{ bowling_type.name }}</option>
+                        {% else %}
+                            <option value="{{ bowling_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">{{ bowling_type.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="w-1/3">
+                <p class="mb-2">Batting Type</p>
+                <select name="battingTypeId" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                    <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Select Batting type</option>
+                    {% for batting_type in batting_types %}
+                        {% if batting_type.id == player.battingTypeId.id %}
+                            <option value="{{ batting_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>{{ batting_type.name }}</option>
+                        {% else %}
+                            <option value="{{ batting_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">{{ batting_type.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="w-1/3">
+                <p class="mb-2">Bowler Type</p>
+                <select name="bowlerTypeId" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                    <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Select Bowler Type</option>
+                    {% for bowler_type in bowler_types %}
+                        {% if bowler_type.id == player.bowlerTypeId.id %}
+                            <option value="{{ bowler_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>{{ bowler_type.name }}</option>
+                        {% else %}
+                            <option value="{{ bowler_type.id }}" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">{{ bowler_type.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div >
+    
+        <div class="flex gap-4 mt-4">
+            <div class="w-1/3">
+                <p class="mb-2">Can Bat?</p>
+                
+            <select name="batting" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Can Bat?</option>
+                    {% if player.batting %}
+                    <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Yes</option>
+                    <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">No</option>
+                    {% else %}
+                    <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" >Yes</option>
+                    <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>No</option>
+                    {% endif %}
+            </select>
+            </div>
+
+            <div class="w-1/3">
+                <p class="mb-2">Can Bowl?</p>
+            <select name="bowling" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Can Bowl?</option>
+                {% if player.bowling %}
+                <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Yes</option>
+                <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">No</option>
+                {% else %}
+                <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Yes</option>
+                <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>No</option>
+                {% endif %}
+            </select>
+            </div>
+
+            <div class="w-1/3">
+                <p class="mb-2">Can Keep?</p>
+            <select name="wicketKeeper" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Can keep?</option>
+                {% if playing.wicketKeeper %}
+                <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Yes</option>
+                <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">No</option>
+                {% else %}
+                <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Yes</option>
+                <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>No</option>
+                {% endif %}
+            </select>
+            </div>
+
+            <div class="w-1/3">
+                <p class="mb-2">Can Field?</p>
+            <select name="fielding" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+                <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Can Field?</option>
+                {% if player.fielding %}
+                <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Yes</option>
+                <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">No</option>
+                {% else %}
+                <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Yes</option>
+                <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>No</option>
+                {% endif %}
+            </select>
+            </div>
+        </div>
+        
+        <div class="flex gap-4 mt-4">
+        <div class="w-1/4">
+            <p class="mb-2">Pace</p>
+        <select name="pace" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+            <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Pacer?</option>
+            {% if player.pace %}
+            <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Yes</option>
+            <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">No</option>
+            {% else %}
+            <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Yes</option>
+            <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>No</option>
+            {% endif %}
+        </select>
+        </div>
+
+        <div class="w-1/4"> 
+            <p class="mb-2">Spin</p>
+        <select name="spin" id="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">
+            <option value="" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">spinner?</option>
+            {% if player.spin %}
+            <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>Yes</option>
+            <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">No</option>
+            {% else %}
+            <option value="true" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full">Yes</option>
+            <option value="false" class="px-2 rounded-lg bg-gray-600 border-solid border-2 border-gray-400 w-full" selected>No</option>
+            {% endif %}
+        </select>
+        </div>
+        </div>
+        <!-- Submit button -->
+        <div class="flex justify-end gap-4 mt-16">
+            <p class="w-1/5 bg-gray-500 px-2 py-1 font-bold text-center" id="personal-btn">Back to Personal-Info</p>
+            <input type="submit" value="Add Player" class="w-1/5 bg-blue-600 px-2 py-1 font-bold">
+            
+        </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $('#proceed-btn').click(()=>{
+        $('#playing-info').show();
+        $('#personal-info').hide();
+    })
+
+    $('#personal-btn').click(()=>{
+        $('#playing-info').hide();
+        $('#personal-info').show();
+    })
+</script>
+{% endblock %}

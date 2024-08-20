@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+<div class="flex gap-16 bg-secondary800 px-4 rounded-t-lg justify-between">
+        <div class="py-2 px-4 flex gap-8">
+            <a href="{% url 'getAllMatchesByCompetition' match.competition.id %}">
+            <div class="flex gap-2">
+                <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="16" transform="matrix(-1 0 0 1 32 0)" fill="#373745"/>
+                    <path d="M19.4375 20.2169L19.6641 20.5333H19.2749H18.4616H18.3588L18.299 20.4498L15.1963 16.1164L15.1129 16L15.1963 15.8836L18.299 11.5502L18.3588 11.4667H18.4616H19.2749H19.6641L19.4375 11.7831L16.4182 16L19.4375 20.2169ZM15.5729 20.2169L15.7994 20.5333H15.4102H14.5976H14.4948L14.435 20.4498L11.3323 16.1164L11.2489 16L11.3323 15.8836L14.435 11.5502L14.4948 11.4667H14.5976H15.4102H15.7994L15.5729 11.7831L12.5542 16L15.5729 20.2169Z" fill="white" stroke="white" stroke-width="0.4"/>
+                </svg>
+                <p class="underline">Back</p>
+            </div>
+            </a>
+            <p>Playing XI - {{match.team1.shortName}} Vs {{match.team2.shortName}} - {{match.date}}</p>
+        </div>
+        <div class="flex justify-end py-2">
+            <input type="submit" value="Submit Playing XI" class="bg-gray-600 py-1 px-2 rounded-md " id="submit-btn" disabled>
+        </div>
+</div>
+<div class="p-6">
+    
+        {% csrf_token %}
+        <input type="text" name="captain1" id="captain1" hidden>
+        <input type="text" name="captain2" id="captain2" hidden>
+        <input type="text" name="wicketkeeper1" id="wicketkeeper1" hidden>
+        <input type="text" name="wicketkeeper2" id="wicketkeeper2" hidden>
+        
+        <div class="flex flex-col gap-8 mt-8" id="team1-playing-setup-div" >
+            <div class="flex ">
+            <div class="w-1/3 flex">
+                <p class="bg-gray-800 px-2 rounded-l-lg">Team</p>
+            <div class="px-2 rounded-r-lg bg-gray-600 border-solid border-2 border-gray-400 w-2/3">   
+                <p value="{{match.team1.id}}" class="px-2  bg-gray-600  w-full">{{match.team1.name}}</p>
+            </div>
+            </div>
+            <p class="bg-primary700 py-1 px-2 rounded-lg w-1/6 text-center bg-opacity-30 font-bold" id="switch-team2-btn">🔄 Switch to Team 2</p>
+            </div>
+
+            <div class="h-96 overflow-auto">
+            <table class="table-auto w-full text-left mt-2">
+            <thead class="bg-gray-900">
+                <tr>
+                    <th class="p-2"><p class="border-2 border-gray-700 w-4 h-4 rounded-sm"></p></th>
+                    <th class="p-2">Name</th>
+                    <th class="p-2">Nationality</th>
+                    <th class="p-2">Captain</th>
+                    <th class="p-2">Wicket-Keeper</th>
+
+
+                </tr>
+            </thead>
+            <tbody >
+                <div>
+                {% for player in team1.players.all %}
+                    <tr >
+                        <td class="p-2 flex">
+                            <input type="checkbox" value="{{player.id}}" name="p{{player.id}}" id="{{player.id}}"  class="h-4 w-4 rounded-lg player-selection1">
+                            <p ></p>
+                            <input type="text" class="hidden">
+                        </td>
+                        <td class="p-2">{{player.firstName}} {{player.lastName}}</td>
+                        <td class="p-2">{{player.nationalityId}}</td>
+                        <td class="p-2" id="{{player.id}}"><input type="checkbox" class="t1-captain"></td>
+                        <td class="p-2" id="{{player.id}}"><input type="checkbox" class="t1-wicketkeeper"></td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+            
+        </div>
+
+        <div class="flex flex-col gap-8 mt-8 hidden" id="team2-playing-setup-div">
+            <div class="flex ">
+            <div class="w-1/3 flex">
+                <p class="bg-gray-500 px-2 rounded-l-lg">Team</p>
+            <div class="px-2 rounded-r-lg bg-gray-600 border-solid border-2 border-gray-400 w-2/3">   
+                    <p value="{{match.team2.id}}" class="px-2  bg-gray-600  w-full">{{match.team2.name}}</p>
+            </div>
+            </div>
+            <p class="bg-primary700 py-1 px-2 rounded-lg w-1/6 text-center bg-opacity-30 font-bold" id="switch-team1-btn">🔄 Switch to Team 1</p>
+
+            </div>
+
+            <div class="h-96 overflow-auto">
+            <table class="table-auto w-full text-left mt-2">
+            <thead class="bg-gray-900">
+                <tr>
+                    <th class="p-2"><p class="border-2 border-gray-700 w-4 h-4 rounded-sm"></p></th><th class="p-2">Name</th><th class="p-2">Nationality</th><th class="p-2">Captain</th><th class="p-2">Wicket-Keeper</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in team2.players.all %}
+                    <tr >
+                        <td class="p-2 flex">
+                            <input type="checkbox" value="{{player.id}}" name="p{{player.id}}" id="{{player.id}}"  class="h-4 w-4 rounded-lg player-selection2">
+                            <p ></p>
+                            <input type="text" class="hidden">
+                        </td>
+                        <td class="p-2">{{player.firstName}}</td>
+                        <td class="p-2">{{player.nationalityId}}</td>
+                        <td class="p-2" id="{{player.id}}"><input type="checkbox" class="t2-captain"></td>
+                        <td class="p-2" id="{{player.id}}"><input type="checkbox" class="t2-wicketkeeper"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+        </div>
+
+        
+    
+</div>
+</form>
+<script>
+    var players_team1 = []
+    var players_team2 = []
+
+    activePlayersPerTeam = "{{ match.matchType.activePlayersPerTeam }}";
+
+    function checkForSubmitBtn(){
+        has_t1_11 = players_team1.length > activePlayersPerTeam;
+        has_t2_11 = players_team2.length > activePlayersPerTeam;
+        
+        has_captain1 = $('#captain1').val().length>0;
+        has_captain2 = $('#captain2').val().length>0;
+        has_wicketkeeper1 = $('#wicketkeeper1').val().length>0;
+        has_wicketkeeper2 = $('#wicketkeeper2').val().length>0;
+        
+        console.log(has_captain1);
+        console.log(has_captain2);
+        console.log(has_wicketkeeper1);
+        console.log(has_wicketkeeper2);
+
+        if( has_t1_11 && has_t2_11 && has_captain1 && has_captain2 && has_wicketkeeper1 && has_wicketkeeper2){
+            $("#submit-btn").prop("disabled", false);
+            $('#submit-btn').attr('class','bg-primary600 py-1 px-2 rounded-md')
+        }
+
+    }
+
+    $('.player-selection1').click(
+        function(){
+            var id = $(this).attr('id');
+            if ($(this).prop('checked')) {
+                players_team1.push(id);
+            }
+            else{
+                players_team1 = players_team1.filter(pid=> pid!=id);
+            }
+            console.log(players_team1);
+        
+            $('.player-selection1').each(function() {
+                current_id = $(this).attr('id');
+                if(players_team1.includes(current_id)){
+                    var current_player = players_team1.indexOf(current_id)+1;
+                    $(this).next().attr('class','ml-4 px-2 rounded-3xl text-sm font-bold text-gray-800 bg-green-100');
+                    if(current_player<=11){
+                        $(this).next().text(current_player);
+                        $(this).next().next().attr('name','t1p'+current_player);
+                        $(this).next().next().attr('value',current_id);
+                    }
+                    else{
+                        $(this).next().text('S'+(current_player-11));
+                        $(this).next().next().attr('name','t1s'+(current_player-activePlayersPerTeam));
+                        $(this).next().next().attr('value',current_id);
+                    }
+                    
+                }
+                else{
+                    $(this).next().text('');
+                    $(this).next().attr('class','');
+                    $(this).next().next().attr('name','');
+                    $(this).next().next().attr('value','');
+                }  
+            });
+
+        checkForSubmitBtn();
+        }
+    )
+
+    $('.player-selection2').click(
+        function(){
+            var id = $(this).attr('id');
+            if ($(this).prop('checked')) {
+                players_team2.push(id);
+            }
+            else{
+                players_team2 = players_team2.filter(pid=> pid!=id);
+            }
+            console.log(players_team2);
+        
+            $('.player-selection2').each(function() {
+                current_id = $(this).attr('id');
+                if(players_team2.includes(current_id)){
+                    var current_player = players_team2.indexOf(current_id)+1;
+                    $(this).next().attr('class','ml-4 px-2 rounded-3xl text-sm font-bold text-gray-800 bg-green-100');
+                    if(current_player<=11){
+                        $(this).next().text(current_player);
+                        $(this).next().next().attr('name','t2p'+current_player);
+                        $(this).next().next().attr('value',current_id);
+                    }
+                    else{
+                        $(this).next().text('S'+(current_player-activePlayersPerTeam));
+                        $(this).next().next().attr('name','t2s'+(current_player-activePlayersPerTeam));
+                        $(this).next().next().attr('value',current_id);
+                    }
+                    
+                }
+                else{
+                    $(this).next().text('');
+                    $(this).next().attr('class','');
+                    $(this).next().next().attr('name','');
+                    $(this).next().next().attr('value','');
+                }  
+            });
+
+            checkForSubmitBtn();
+        }
+    )
+
+    $('.t1-captain').click(
+        function(){
+            player_id = $(this).parent().attr('id');  
+            $('#captain1').val(player_id);
+            $('.t1-captain').prop('checked',false);
+            $(this).prop('checked',true);
+            checkForSubmitBtn();
+        }
+    )
+
+    $('.t2-captain').click(
+        function(){
+            player_id = $(this).parent().attr('id');  
+            $('#captain2').val(player_id);
+            $('.t2-captain').prop('checked',false);
+            $(this).prop('checked',true);
+            checkForSubmitBtn();
+        }
+    )
+    $('.t1-wicketkeeper').click(
+        function(){
+            player_id = $(this).parent().attr('id');  
+            $('#wicketkeeper1').val(player_id);
+            $('.t1-wicketkeeper').prop('checked',false);
+            $(this).prop('checked',true);
+            checkForSubmitBtn();
+        }
+    )
+    $('.t2-wicketkeeper').click(
+        function(){
+            player_id = $(this).parent().attr('id');  
+            $('#wicketkeeper2').val(player_id);
+            $('.t2-wicketkeeper').prop('checked',false);
+            $(this).prop('checked',true);
+            checkForSubmitBtn();
+        }
+    )
+
+    $('#switch-team2-btn').click(
+        function(){
+            $('#team1-playing-setup-div').hide();
+            $('#team2-playing-setup-div').show();
+        }
+    )
+    $('#switch-team1-btn').click(
+        function(){
+            $('#team2-playing-setup-div').hide();
+            $('#team1-playing-setup-div').show();
+        }
+    )
+</script>
+{% endblock %}

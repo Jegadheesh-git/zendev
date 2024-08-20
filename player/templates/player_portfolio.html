@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="p-8">
+
+    <div class="flex w-full bg-secondary600 p-2">
+        <div class="p-2">
+        <p class=" bg-secondary400 text-2xl">{{player.firstName}} {{player.lastName}}</p>
+        <p class="">{{player.nationalityId}}</p>
+        </div>
+    </div>
+    <div class="flex gap-2 w-full px-2">
+        <div class="flex w-2/6">
+            <div class="w-1/2">
+                <p>Date Of Birth</p>
+            </div>
+            <div class="w-1/2">
+                <h3>{{player.dob}}</h3>
+            </div>
+        </div>
+        <div class="w-4/6"></div>
+    </div>
+ 
+    <h3>{{player.heightType}}</h3>
+    <h3>{{player.height}}</h3>
+    <h3>{{player.weight}}</h3>
+    <h3>{{player.batting}}</h3>
+    <h3>{{player.bowling}}</h3>
+    <h3>{{player.fielding}}</h3>
+    <h3>{{player.wicketKeeper}}</h3>
+    <h3>{{player.bowlingTypeId}}</h3>
+    <h3>{{player.battingTypeId}}</h3>
+    <h3>{{player.bowlerTypeId}}</h3>
+    <h3>{{player.pace}}</h3>
+    <h3>{{player.spin}}</h3>
+
+</div>
+
+{% endblock %}

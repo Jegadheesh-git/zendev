@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-6 flex flex-col gap-4">
+    
+    <h1 class="text-gray-500">Confirmation Required!</h1>
+    <p>Are you sure you want to delete Team "{{ team.id }} - {{ team.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex gap-4">
+            <p><a href="{% url 'getAllTeams'  %}">Cancel</a></p>
+        <button type="submit" class="w-1/7 px-2 bg-red-500">Confirm</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

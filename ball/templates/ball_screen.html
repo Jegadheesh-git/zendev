@@ -1,0 +1,9 @@
+<div class="flex">
+                                <p class="bg-gray-600 px-2 rounded-l-lg wicket-stumped-label">Stumped</p>
+                                <select name="" id="" class="rounded-r-lg bg-gray-900 px-1 wicket-stumped-div">
+                                    <option value="">None</option>
+                                    {% for bowler in bowlers %}
+                                        <option value="">{{bowler.player.firstName}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>

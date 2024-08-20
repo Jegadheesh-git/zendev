@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex  bg-bgGrayPrimary px-4 rounded-t-lg font-bold">
+        <p class="py-2 px-4 bg-gradient-to-t from-green-600 to-transparent  border-b border-green-500 border-solid  ">Match Setup</p>
+        <p class="py-2 px-4 ">Toss & Umpire</p>
+        <p class="py-2 px-4 ">Playing XI</p>
+</div>
+<div class="p-6 ">
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="flex flex-col gap-8 mt-8 w-3/4" id="match-setup-div" >
+            <div class="flex gap-8 w-full">
+            <div class="w-1/3">
+                <p class="my-2">Competition</p>
+                <select name="competition" id="" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full py-1">
+                    {% for competition in competitions %}
+                        {% if competition.id == selected_competition.id %}
+                            <option value="{{competition.id}}" selected class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full">{{competition.name}}</option>
+                        {% else %}
+                            <option value="{{competition.id}}" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full">{{competition.name}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="w-1/3">
+            <p class="my-2">Stadium</p>
+            <select name="stadium" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full py-1">
+                <option value="" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full">UnKnown</option>
+                {% for stadium in stadiums %}
+                    <option value="{{stadium.id}}" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full">{{stadium.name}}</option>
+                {% endfor %}
+            </select>
+            </div>
+
+            <div class="w-1/3">
+                <p class="my-2">Date</p>
+            <input type="date" name="date" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full py-1">
+            </div>
+            </div>
+
+            <div class="flex w-full gap-4">
+            <div class="w-1/4">
+                <p class="my-2">Match type</p>
+            <select name="matchType" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full py-1">
+                {% for match_type in match_types %}
+                        <option value="{{match_type.id}}" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full" >{{match_type.name}}</option>
+                {% endfor %}
+            </select>
+            </div>
+
+            <div class="w-1/4">
+                <p class="my-2">Condition</p>
+            <select name="dayOrNight" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full py-1">
+                <option value="Day" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">Day</option>
+                <option value="Night" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">Night</option>
+                <option value="DayNight" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">DayNight</option>
+            </select>
+            </div>
+
+            <div class="w-1/4">
+                <p class="my-2">1st Innings</p>
+            <select name="fisrtInningsCondition" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full py-1">
+                <option value="Day" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">Day</option>
+                <option value="Under Lights" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">Under Lights</option>
+                
+            </select>
+            </div>
+
+            <div class="w-1/4">
+                <p class="my-2">2nd Innings</p>
+            <select name="secondInningsCondition" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-full py-1">
+                <option value="Day" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">Day</option>
+                <option value="Under Lights" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">Under Lights</option>
+                
+            </select>
+            </div>
+
+
+            </div>
+
+            <div class="flex mt-4 w-full">
+            <div class="w-1/3 flex">
+                <p class="bg-secondary500 px-2 rounded-l-lg py-1">Team 1</p>
+            <select name="team1" class="px-2 rounded-r-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-2/3 py-1">
+                {% for team in teams %}
+                    <option value="{{team.id}}" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full">{{team.name}}</option>
+                {% endfor %}
+            </select>
+            </div>
+
+            <div class="w-1/3 flex">
+                <p class="bg-secondary500 px-2 rounded-l-lg py-1">Team 2</p>
+            <select name="team2" class="px-2 rounded-r-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-2/3 py-1" >
+                {% for team in teams %}
+                    <option value="{{team.id}}" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full" >{{team.name}}</option>
+                {% endfor %}
+            </select>
+            </div>
+
+            <div class="w-1/3 flex">
+                <p class="bg-secondary500 px-2 rounded-l-lg py-1">Knock out</p>
+            <select name="knockout" class="px-2 rounded-r-lg bg-bgGrayPrimary border-solid border-1 border-borderGray w-2/3 py-1" >
+                {% for knockout in knockouts %}
+                    <option value="{{knockout.id}}" class="px-2 rounded-lg bg-bgGrayPrimary border-solid border-2 border-gray-400 w-full" >{{knockout.name}}</option>
+                {% endfor %}
+            </select>
+            </div>
+            </div>
+
+            <div class="flex justify-end gap-4">
+                <a href="{% url 'getAllMatchesByCompetition' selected_competition.id %}"><p class="py-2 underline">Cancel</p></a>
+                <input type="submit" value="Add Match" class=" px-4 bg-buttonPurple py-2 rounded-md font-bold">
+            </div>        
+        </div>
+    </form>
+</div>
+{% endblock %}

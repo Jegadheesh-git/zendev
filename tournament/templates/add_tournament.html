@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="p-4"><a href="{% url 'getAllTournamentsByUserId' %}">< Back</a></h2>
+    <form method="post" class="p-8 flex flex-col gap-4">
+        {% csrf_token %}
+        <label for="">Tournament Name</label>
+
+        <div class="flex flex-row gap-4">
+        <input type="text" name="tournament_name" placeholder="Tournament Name" class="px-2 w-1/4 rounded-lg text-gray-900">
+        <input type="submit" value="Add" class="text-gray-100 w-12 rounded-lg font-bold bg-blue-900">
+        </div>
+    </form>
+{% endblock %}

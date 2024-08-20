@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zendmind Sports</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="">
+        <div class="bg-gray-300 p-2 pt-4 shadow-lg flex justify-between">
+            <p class="px-4 font-bold">Zendmind sports</p>
+            <div class="flex gap-6 pr-8 cursor-pointer">
+                {% if user.is_authenticated %}
+                    <p><a href="{% url 'displayLogout' %}">logout</a></p>
+                {% else %}
+                    <a href="{% url 'displaySignup' %}"><p>create an account</p></a>
+                    <a href="{% url 'displayLogin' %}"><p class="bg-gray-800 px-2 rounded-lg text-gray-100 font-bold hover:bg-gray-100 hover:text-gray-800">Login</p></a>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="p-4">
+            
+            <div class="flex gap-8">
+                <p>My Products </p> 
+                <p class="underline"><a href="{% url 'displayProductStore' %}">Go to Store</a></p>
+            </div>
+
+           {% if myProducts %}
+           <div class="grid grid-cols-4 gap-4 mt-8">
+                {% for product in myProducts %}
+                    <div class="bg-gray-300 shadow-lg p-4">
+                        {% if product.isActive %}
+                            <div class="flex justify-between">
+                                <p>{{product.subscription.name}}</p>
+                                <a href="{{product.subscription.url}}"><p class="text-gray-100 bg-gray-700 px-2 shadow-xl font-bold cursor-pointer">LAUNCH</p></a>
+                            </div>
+                            <p class="my-4 text-sm text-gray-700">*Expires on {{product.endsOn}}</p>
+                        {% else %}
+                             <div class="flex justify-between">
+                                <p>{{product.subscription.name}}</p>
+                                <p class="text-gray-100 bg-gray-700 px-2 shadow-xl font-bold cursor-pointer">Renew</p>
+                            </div>
+                            <p class="my-4 text-sm text-gray-700">*Expired on {{product.endsOn}}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+           </div>
+           {% else %}
+           <div class="mt-8 flex justify-center">
+                <div>
+                    <p>You Don't have any Active Products</p>
+                    <a href="{% url 'displayProductStore' %}"><p class="text-gray-100 bg-gray-800 px-4 py-2 text-center cursor-pointer mt-4 hover:shadow-lg">Go to Products Store</p></a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

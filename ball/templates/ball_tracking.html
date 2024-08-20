@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Pixel Capture with jQuery</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<img id="sourceImage" src="path_to_your_image.jpg" width="500" height="300" alt="Your Image">
+<canvas id="canvas" width="500" height="300" style="display: none;"></canvas>
+
+<script>
+$(document).ready(function() {
+    // When the image is clicked
+    $('#sourceImage').on('click', function(e) {
+        // Get reference to the canvas element and context
+        var canvas = $('#canvas')[0];
+        var ctx = canvas.getContext('2d');
+
+        // Draw the image onto the canvas
+        var image = $('#sourceImage')[0];
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        // Get pixel data
+        var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var pixels = imageData.data;
+
+        // Example: Log the pixel data of the first pixel
+        var pixelIndex = 0;
+        var r = pixels[pixelIndex];
+        var g = pixels[pixelIndex + 1];
+        var b = pixels[pixelIndex + 2];
+        var a = pixels[pixelIndex + 3];
+        console.log("RGBA values of the first pixel:", r, g, b, a);
+    });
+});
+</script>
+</body>
+</html>

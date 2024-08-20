@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenmind Sports</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="flex justify-center "> 
+        <div class="flex lg:w-1/2 mt-16 shadow-xl lg:flex-row flex-col">
+            <div class="lg:w-5/6 bg-gradient-to-r from-gray-300 to-gray-100 lg:p-8 lg:pl-16 p-2 flex flex-col gap-8">
+                <p class="font-bold">🔵 Create your account</p>
+                {% if error %}
+                    <p class="text-red-600 font-bold">NOTE : {{error}}</p>
+                {% endif %}
+                <form id="registrationForm" method="POST">
+                    {% csrf_token %}
+                    <div class="flex flex-col gap-4 lg:w-3/4 my-4">
+                        <div class="flex gap-4">
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name" class="border-2 border-gray-300 rounded-lg px-2 py-1 w-1/2">
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" class="border-2 border-gray-300 rounded-lg px-2 py-1 w-1/2">
+                        </div>
+                        <input type="text" id="email" name="email" placeholder="Email" class="border-2 border-gray-300 rounded-lg px-2 py-1">
+                        <input type="password" name="password" placeholder="Password" class="border-2 border-gray-300 rounded-lg px-2 py-1">
+                        <div class="flex gap-4">
+                            <input type="text" id="company" name="company" placeholder="Company Name" class="border-2 border-gray-300 rounded-lg px-2 py-1 w-1/2">
+                            <input type="text" id="role" name="role" placeholder="Job Role" class="border-2 border-gray-300 rounded-lg px-2 py-1 w-1/2">
+                        </div>
+                        <div class="flex gap-4 text-sm text-gray-600">
+                            <input type="checkbox" id="terms" name="hasAcceptedTC" class="w-8 h-8">
+                            <p>I agree to <a href="https://www.google.com" class="underline" target="_">All Terms and conditions</a></p>
+                        </div>
+                        <div class="flex gap-4 text-sm text-gray-600">
+                            <input type="checkbox" id="privacy" name="hasAcceptedPP" class="w-8 h-8">
+                            <p>I agree to <a href="https://www.google.com" class="underline" target="_">All Privacy Policies</a></p>
+                        </div>
+                        <div class="flex gap-4 text-sm text-gray-600">
+                            <input type="checkbox" id="newsletter" name="hasAcceptedNewsletter" class="w-8 h-8">
+                            <p>I signup for the NewsLetter <a href="https://www.google.com" class="underline" target="_">(why?)</a></p>
+                        </div>
+                        <input type="submit" value="Create Account" class="bg-gray-800 px-2 py-1 text-gray-100 rounded-lg font-bold w-1/2">
+                    </div>
+                </form>
+                <p class="text-sm text-gray-600">&copy; All rights reserved to Hashtopia Food Chain</p>
+            </div>
+            <div class="lg:w-1/6 bg-gradient-to-r from-gray-800 to-gray-400 text-gray-100"></div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function() {
+        $('#registrationForm').on('submit', function(e) {
+            var isValid = true;
+
+            // Check if all text inputs are filled
+            $('input[type="text"], input[type="password"]').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    alert('Please fill out all fields.');
+                    return false; // Break out of the loop
+                }
+            });
+
+            // Check if terms and privacy checkboxes are checked
+            if (!$('#terms').is(':checked')) {
+                isValid = false;
+                alert('You must agree to the terms and conditions.');
+            }
+            if (!$('#privacy').is(':checked')) {
+                isValid = false;
+                alert('You must agree to the privacy policy.');
+            }
+
+            // Prevent form submission if validation fails
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+</html>

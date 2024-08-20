@@ -1,22 +1,43 @@
-# Virtual environment
-venv/
-.venv/
-
-# Python
+# Ignore Python bytecode and cache files
 __pycache__/
+*.py[cod]
+
+# Django stuff:
+*.log
+*.pot
 *.pyc
 *.pyo
-.python-version
+*.sqlite3
+*.env
 
-# Django
-*.log
-db.sqlite3
+# Node modules
+node_modules/
+
+# Static files
+/static/
+staticfiles/
 media/
 
-# Environment variables
+# Virtual environment
+venv/
+
+# Tailwind CSS generated files
+*.css
+*.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+
+# Database files
+db.sqlite3
+
+# Environment files
 .env
 
-# IDEs and editors
-.vscode/
-*.sublime-project
-*.sublime-workspace
+# Package files
+package-lock.json

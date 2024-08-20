@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex bg-bgGrayPrimary px-4 rounded-t-lg">
+        <p class="py-2 px-4 ">Match setup</p>
+        <p class="py-2 px-4 bg-gradient-to-t from-green-600 to-transparent  border-b border-green-500 border-solid  ">Toss & Update</p>
+        <p class="py-2 px-4 ">Playing XI</p>
+
+
+</div>
+<div class="p-6">
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-2 gap-8 mt-8" id="toss-setup-div" >
+            
+            <div class="flex">
+                <p class="bg-tableBody py-2 px-4 rounded-l-lg">Toss Won By</p>
+            <select name="tossWonBy" class="p-2 rounded-r-lg bg-bgGraySecondary border-solid border-2 border-gray-400 w-2/3">
+                   {% if match.tossWonBy %}
+                        {% if match.tossWonBy.id == match.team1.id %}
+                            <option value="{{match.team1.id}}" selected>{{match.team1.name}}</option>
+                            <option value="{{match.team2.id}}">{{match.team2.name}}</option>
+                        {% else %}
+                            <option value="{{match.team1.id}}" >{{match.team1.name}}</option>
+                            <option value="{{match.team2.id}}" selected>{{match.team2.name}}</option>
+                        {% endif %}  
+                    {% else %} 
+                        <option value="{{match.team1.id}}" >{{match.team1.name}}</option>
+                        <option value="{{match.team2.id}}">{{match.team2.name}}</option>
+                    {% endif %}  
+            </select>
+            </div>
+
+            <div class=" flex">
+                <p class="bg-tableBody py-2 px-4 rounded-l-lg">Opted To</p>
+            <select name="optTo" class="p-2 rounded-r-lg bg-bgGraySecondary border-solid border-2 border-gray-400 w-2/3" >
+                {% if match.optTo %}
+                    {% if match.optTo == "Batting" %}
+                        <option value="Batting" selected>Batting</option>
+                        <option value="Fielding">Fielding</option>
+                    {% else %}
+                        <option value="Batting">Batting</option>
+                        <option value="Fielding" selected>Fielding</option>
+                    {% endif %}
+                {% else %}
+                    <option value="Batting"  >Batting</option>
+                    <option value="Fielding"  >Fielding</option>
+                {% endif %}
+            </select>
+            </div>
+        
+            <div class="flex">
+                <p class="bg-tableBody py-2 px-4 rounded-l-lg">Umpire 1</p>
+            <select name="umpire1" class="p-2 rounded-r-lg bg-bgGraySecondary border-solid border-2 border-gray-400 w-2/3">
+                {% if match.umpire1 %}  
+                    {% for umpire in umpires %}
+                        {% if match.umpire1.id == umpire.id %}
+                            <option value="{{umpire.id}}" selected>{{umpire.name}}</option>
+                        {% else %}
+                            <option value="{{umpire.id}}" >{{umpire.name}}</option>
+                        {% endif %}
+                    {% endfor %} 
+                {% else %}
+                    {% for umpire in umpires %}
+                    <option value="{{umpire.id}}" >{{umpire.name}}</option>   
+                    {% endfor %}
+                {% endif %}
+            </select>
+            </div>
+
+            <div class="flex">
+                <p class="bg-tableBody py-2 px-4 rounded-l-lg">Umpire 2</p>
+            <select name="umpire2" class="p-2 rounded-r-lg bg-bgGraySecondary border-solid border-2 border-gray-400 w-2/3" >
+                {% if match.umpire2 %}  
+                    {% for umpire in umpires %}
+                        {% if match.umpire2.id == umpire.id %}
+                            <option value="{{umpire.id}}" selected>{{umpire.name}}</option>
+                        {% else %}
+                            <option value="{{umpire.id}}" >{{umpire.name}}</option>
+                        {% endif %}
+                    {% endfor %} 
+                {% else %}
+                    {% for umpire in umpires %}
+                    <option value="{{umpire.id}}" >{{umpire.name}}</option>   
+                    {% endfor %}
+                {% endif %} 
+            </select>
+            </div>
+
+            <div class="flex">
+                <p class="bg-tableBody py-2 px-4 rounded-l-lg">Umpire 3</p>
+            <select name="umpire3" class="p-2 rounded-r-lg bg-bgGraySecondary border-solid border-2 border-gray-400 w-2/3" >
+                {% if match.umpire3 %}  
+                    {% for umpire in umpires %}
+                        {% if match.umpire3.id == umpire.id %}
+                            <option value="{{umpire.id}}" selected>{{umpire.name}}</option>
+                        {% else %}
+                            <option value="{{umpire.id}}" >{{umpire.name}}</option>
+                        {% endif %}
+                    {% endfor %} 
+                {% else %}
+                    {% for umpire in umpires %}
+                    <option value="{{umpire.id}}" >{{umpire.name}}</option>   
+                    {% endfor %}
+                {% endif %} 
+            </select>
+            </div>
+
+        </div>
+        <div class="mt-8 flex gap-4">
+            <a href="{% url 'getAllMatchesByCompetition' match.competition.id %}"><p class="py-2 underline">Update Later</p></a>
+            <input type="submit" value="Update Toss" class="px-4 py-2 bg-buttonPurple rounded-lg font-bold">
+        </div>
+        
+    </form>
+</div>
+
+{% endblock %}
