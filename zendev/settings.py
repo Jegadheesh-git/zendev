@@ -40,7 +40,7 @@ SECURE_HSTS_PRELOAD = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'True'
 
-ALLOWED_HOSTS = ['43.204.235.144', 'localhost']
+ALLOWED_HOSTS = ['43.204.235.144', 'localhost','13.200.215.6']
 
 
 # Application definition
