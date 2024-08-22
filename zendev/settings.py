@@ -29,7 +29,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 # Set up a strong secret key
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-_%3nxc6*mil$13y!2y10e%cxg^z-yd)%vzsh74n@iu^9&p2m0y'
 
 # HSTS settings
 SECURE_HSTS_SECONDS = 3600
@@ -38,7 +38,7 @@ SECURE_HSTS_PRELOAD = True
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = 'True'
 
 ALLOWED_HOSTS = ['43.204.235.144', 'localhost']
 
@@ -99,11 +99,11 @@ WSGI_APPLICATION = 'zendev.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),  # Use environment variables for sensitive data
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT', '5432'),  # Default port for PostgreSQL
+        'NAME': 'zendb',  # Use environment variables for sensitive data
+        'USER': 'postgres',
+        'PASSWORD': 'zenminds2024',
+        'HOST': 'zendb.c5qgkg2m23zw.ap-south-1.rds.amazonaws.com',
+        'PORT': '5432',  # Default port for PostgreSQL
     }
 }
 
@@ -155,6 +155,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
-RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
-RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
+RAZORPAY_KEY_ID = 'rzp_test_BjBfmX5M3wr9l1'
+RAZORPAY_KEY_SECRET = 'OZ5b9u8uAUHQFese8Rs0zSLJ'
 
