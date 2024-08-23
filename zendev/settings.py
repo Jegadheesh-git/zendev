@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-_%3nxc6*mil$13y!2y10e%cxg^z-yd)%vzsh74n@iu^9&p2m0y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'True'
 
-ALLOWED_HOSTS = ['43.204.235.144', 'localhost','13.200.215.6']
+ALLOWED_HOSTS = ["*"]
 
 
 INSTALLED_APPS = [
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'player',
     'team',
     'tournament',
-    'ball'
+    'ball',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'zendev.urls'
@@ -76,7 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'zendev.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -128,10 +129,12 @@ USE_TZ = True
 
 
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATIC_URL = 'static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URLS ='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 # Default primary key field type
