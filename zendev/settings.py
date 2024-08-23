@@ -21,29 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # settings.py
 
-# Use HTTPS
-SECURE_SSL_REDIRECT = True
-
-# Secure session and CSRF cookies
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
 # Set up a strong secret key
 SECRET_KEY = 'django-insecure-_%3nxc6*mil$13y!2y10e%cxg^z-yd)%vzsh74n@iu^9&p2m0y'
-
-# HSTS settings
-SECURE_HSTS_SECONDS = 3600
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'True'
 
 ALLOWED_HOSTS = ['43.204.235.144', 'localhost','13.200.215.6']
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
