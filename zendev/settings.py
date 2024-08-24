@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'team',
     'tournament',
     'ball',
-    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'zendev.urls'
@@ -81,7 +79,7 @@ WSGI_APPLICATION = 'zendev.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -90,6 +88,13 @@ DATABASES = {
         'PASSWORD': 'zenminds2024',
         'HOST': 'zendb.c5qgkg2m23zw.ap-south-1.rds.amazonaws.com',
         'PORT': '5432',  # Default port for PostgreSQL
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -129,11 +134,7 @@ USE_TZ = True
 
 
 
-STATIC_URL = 'static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_URLS ='/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/static/'
 
 
 
